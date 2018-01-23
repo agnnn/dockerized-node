@@ -1,5 +1,5 @@
 # dockerized-node
- an example of setting up a Node.js app with Docker. The goal is to use the same container for development, testing, and production.
+This an example of setting up a Node.js app with Docker. The goal is to use the same container for development, testing, and production.
 
 ## Development
 
