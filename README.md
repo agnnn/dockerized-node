@@ -1,5 +1,5 @@
 # dockerized-node
- example of setting up a Node.js app with Docker. The goal is to use the same container for development, testing, and production.
+ This is an example of setting up a Node.js app with Docker and testing Jenkins server. The goal is to use the same container for development, testing, and production.
 
 ## Development
 
