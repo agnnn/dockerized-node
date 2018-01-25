@@ -20,7 +20,7 @@
       def built_img = ''
 
       stage('Checkout git repo') {
-        git branch: 'develop', url: params.git_repo, credentialsId: d34217f1-0627-453e-8ba6-6c7b3b5da491}
+        git branch: 'master', url: params.git_repo, credentialsId: d34217f1-0627-453e-8ba6-6c7b3b5da491}
 
 
       stage('Build Docker image') {
