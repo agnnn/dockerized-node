@@ -3,19 +3,28 @@
  * For this template to work you need some custom
  */
 
- Jenkinsfile (Declarative Pipeline)
  pipeline {
+     parameters {
+           string(name: 'git_repo', defaultValue:"git@github.com:agnnn/dockerized-node.git", description: "GitHub repository")
+           string(name: 'docker_repository', defaultValue:"mdf/frontend", description: "Docker repository")
+           string(name: 'registry_url', defaultValue:"https://ofoovmmfpfoss.azurecr.io", description: "Azure Docker repository")
+       }
+
     node {
-    def built_img = ''
-    stage('Checkout git repo') {
-      git branch: 'develop', url: params.git_repo, credentialsId: params.git_credentials}
-    stage('Build Docker image') {
-      built_img = docker.build(params.docker_repository + ":${env.BUILD_NUMBER}", '.')
-    }
-    stage('Push Docker image to Azure Container Registry') {
-      docker.withRegistry(params.registry_url, params.registry_credentials_id ) {
-        built_img.push("${env.BUILD_NUMBER}");
+      def built_img = ''
+      stage('Checkout git repo') {
+        git branch: 'develop', url: params.git_repo, credentialsId: d34217f1-0627-453e-8ba6-6c7b3b5da491}
+
+
+      stage('Build Docker image') {
+        built_img = docker.build(params.docker_repository + ":${env.BUILD_NUMBER}", '.')
       }
-    }
+
+
+      stage('Push Docker image to Azure Container Registry') {
+        docker.withRegistry(params.registry_url, credentialsId: docker_credentials ) {
+          built_img.push("${env.BUILD_NUMBER}");
+        }
+      }
 }
 }
