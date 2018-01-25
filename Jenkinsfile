@@ -4,14 +4,21 @@
  */
 
  pipeline {
+     agent none
+
+     options {
+       disableConcurrentBuilds()
+     }
+
      parameters {
            string(name: 'git_repo', defaultValue:"git@github.com:agnnn/dockerized-node.git", description: "GitHub repository")
            string(name: 'docker_repository', defaultValue:"mdf/frontend", description: "Docker repository")
            string(name: 'registry_url', defaultValue:"https://ofoovmmfpfoss.azurecr.io", description: "Azure Docker repository")
        }
 
-    node {
+    stages {
       def built_img = ''
+
       stage('Checkout git repo') {
         git branch: 'develop', url: params.git_repo, credentialsId: d34217f1-0627-453e-8ba6-6c7b3b5da491}
 
@@ -26,5 +33,15 @@
           built_img.push("${env.BUILD_NUMBER}");
         }
       }
-}
-}
+
+      post {
+        failure {
+          // notify users when the Pipeline fails
+          mail to: 'ravindran@pythian.com',
+              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+              body: "Something is wrong with ${env.BUILD_URL}"
+        }
+
+     }
+   }
+  }
